@@ -958,11 +958,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "c:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\Persistence.csproj",
+      "projectPath": "C:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\Persistence.csproj",
       "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\obj\\",
+      "outputPath": "C:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -972,14 +972,15 @@
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "c:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Domain\\Domain.csproj": {
-              "projectPath": "c:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Domain\\Domain.csproj"
+            "C:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\allan\\Desktop\\Github\\Reactivities-Social-App\\Reactivities\\Domain\\Domain.csproj"
             }
           }
         }
