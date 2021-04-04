@@ -1,5 +1,8 @@
 # Reactivities Social App
 
+## Deployment Link
+Link: Coming Soon...
+
 ## Description
 This is project is a social network application that allows users to sign up to events (similar to MeetUp or Facebook) and is built using ASP.NET Core and React JS.
 
