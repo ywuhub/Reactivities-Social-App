@@ -9,8 +9,8 @@ This is project is a social network application that allows users to sign up to 
 ## Technology
 Coming Soon...
 
-## What I have learnt:
-* Learn how to build an application from start to publishing with .Net Core (v5.0), React 17 (with Typescript) and Mobx
+## What I have learnt is:
+* How to build an application from start to publishing with .Net Core (v5.0), React 17 (with Typescript) and Mobx
 * How to build a Web API in .Net Core with Clean Architecture using the CQRS + Mediator pattern
 * How to use AutoMapper and MediatR packages in the .Net projects
 * How to build a multi-project solution with .Net Core
