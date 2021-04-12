@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Reactivities.Domain;
 using Reactivities.Persistence;
@@ -16,8 +17,10 @@ namespace Reactivities.Application.Activities
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
+                _mapper = mapper;
                 _context = context;
 
             }
@@ -25,8 +28,7 @@ namespace Reactivities.Application.Activities
             {
                 var activity = await _context.Activities.FindAsync(request.Activity.id);
 
-                // implement Auto Mapper instead of assigning changes 
-                activity.Title = request.Activity.Title ?? activity.Title;
+                _mapper.Map(request.Activity, activity);
 
                 await _context.SaveChangesAsync();
 
