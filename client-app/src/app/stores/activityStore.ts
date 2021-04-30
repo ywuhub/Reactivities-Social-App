@@ -18,7 +18,8 @@ export default class ActivityStore {
         return Array.from(this.activityRegistry.values()).sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
     }
 
-    loadActivities = async () => {        
+    loadActivities = async () => {    
+        this.loadingInitial = true;    
         try {
             // Getting the activities from the API
             const activities = await agent.Activities.list();
@@ -47,6 +48,7 @@ export default class ActivityStore {
             try {
                 activity = await agent.Activities.details(id);
                 this.setActivity(activity);
+                this.selectedActivity = activity;
                 this.setLoadingInitial(false);
             } catch (error) {
                 console.log(error);
