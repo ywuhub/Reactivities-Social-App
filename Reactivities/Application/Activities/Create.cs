@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using Reactivities.Domain;
 using Reactivities.Persistence;
@@ -13,7 +14,15 @@ namespace Reactivities.Application.Activities
             public Activity Activity { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class CommandValidator : AbstractValidator<Command>
+        {
+                public CommandValidator()
+                {
+                    RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+                }
+        }
+
+            public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
 
