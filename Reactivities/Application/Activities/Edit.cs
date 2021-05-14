@@ -25,7 +25,7 @@ namespace Reactivities.Application.Activities
         }
 
 
-        public class Handler : IRequestHandler<Command, <Result<Unit>>>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;

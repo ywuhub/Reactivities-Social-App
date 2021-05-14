@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { BreadcrumbSection } from 'semantic-ui-react';
+import { history } from '../..';
 import { Activity } from '../models/activity';
 
 // add timeouts for methods
@@ -25,7 +25,7 @@ axios.interceptors.response.use(async response => {
             toast.error('unauthorised');
             break;
         case 404:
-            toast.error('not found');
+            history.push('/not-found');
             break;
         case 500:
             toast.error('server error');

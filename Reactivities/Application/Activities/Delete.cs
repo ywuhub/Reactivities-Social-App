@@ -14,7 +14,7 @@ namespace Reactivities.Application.Activities
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, <Result<Unit>>>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context) {
