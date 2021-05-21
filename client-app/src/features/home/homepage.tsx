@@ -4,7 +4,7 @@ import { Container, Header, Segment, Image, Button } from 'semantic-ui-react';
 
 export default function HomePage() {
       return (
-            <Segment invert textAlign='center' className='mastHead'>
+            <Segment inverted textAlign='center' className='mastHead'>
                   <Container text>
                         <Header as='h1' inverted>
                               <Image size='massive' src='/assets/logo.png' style={{marginBottom: 12}} />
