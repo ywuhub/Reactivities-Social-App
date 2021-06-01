@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Reactivities.Application.Activities;
@@ -17,6 +18,7 @@ namespace Reactivities.API.Controllers
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
