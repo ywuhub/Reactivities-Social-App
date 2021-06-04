@@ -10,6 +10,7 @@ using Reactivities.Persistence;
 
 namespace Reactivities.API.Controllers
 {
+    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
