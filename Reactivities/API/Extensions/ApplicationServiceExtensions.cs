@@ -1,3 +1,5 @@
+using Application.Interfaces;
+using Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +35,8 @@ namespace Reactivities.API.Extensions
 
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
+            services.AddScoped<IUsernameAccessor, UsernameAccessor>();
+           
             return services;
         }
     }
