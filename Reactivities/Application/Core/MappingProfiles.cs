@@ -1,3 +1,4 @@
+using Application.Activities;
 using AutoMapper;
 using Reactivities.Domain;
 
@@ -8,6 +9,7 @@ namespace Reactivities.Application.Core
         public MappingProfiles()
         {
             CreateMap<Activity, Activity>();
+            CreateMap<Activity, ActivityDTO>();
         }
     }
 }
