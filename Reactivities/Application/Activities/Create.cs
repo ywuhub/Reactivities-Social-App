@@ -46,7 +46,7 @@ namespace Reactivities.Application.Activities
                             AppUser = user,
                             Activity = request.Activity,
                             IsHost = true
-                        }
+                        };
 
                         request.Activity.Attendees.Add(attendee);
 
