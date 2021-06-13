@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Activities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,12 @@ namespace Reactivities.API.Controllers
         public async Task<IActionResult> DeleteActivity(Guid id) 
         {
             return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
+        }
+
+        [HttpPost("{id}/attend")]
+        public async Task<IActionResult> Attend(Guid id)
+        {
+            return HandleResult (await Mediator.Send(new UpdateAttendance.Command{Id = id}));
         }
     }
 }
