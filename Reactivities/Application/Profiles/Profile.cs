@@ -1,4 +1,4 @@
-namespace Application.Profiles
+namespace Reactivities.Application.Profiles
 {
     public class Profile
     {

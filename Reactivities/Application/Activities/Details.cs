@@ -1,34 +1,42 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Activities;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Reactivities.Application.Core;
 using Reactivities.Domain;
 using Reactivities.Persistence;
 
 namespace Reactivities.Application.Activities
 {
-    public class Details
-    {
-        public class Query : IRequest<Result<Activity>>
-        {
-            public Guid Id { get; set; }
-        }
-
-        public class Handler : IRequestHandler<Query, Result<Activity>>
-        {
-            private readonly DataContext _context;
-            public Handler(DataContext context)
+      public class Details
+      {
+            public class Query : IRequest<Result<ActivityDTO>>
             {
-                _context = context;
-
+                  public Guid Id { get; set; }
             }
-            public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
+
+            public class Handler : IRequestHandler<Query, Result<ActivityDTO>>
             {
-                var activity = await _context.Activities.FindAsync(request.Id);
+                  private readonly DataContext _context;
+                  private readonly IMapper _mapper;
+                  public Handler(DataContext context, IMapper mapper)
+                  {
+                        _mapper = mapper;
+                        _context = context;
 
-                return Result<Activity>.Success(activity);
+                  }
+                  public async Task<Result<ActivityDTO>> Handle(Query request, CancellationToken cancellationToken)
+                  {
+                        var activity = await _context.Activities
+                            .ProjectTo<ActivityDTO>(_mapper.ConfigurationProvider)
+                            .FirstOrDefaultAsync(x => x.id == request.Id);
+
+                        return Result<ActivityDTO>.Success(activity);
+                  }
             }
-        }
-    }
+      }
 }
