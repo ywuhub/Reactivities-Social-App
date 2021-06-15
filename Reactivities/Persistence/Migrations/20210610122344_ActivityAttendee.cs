@@ -7,9 +7,6 @@ namespace Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ActivityAppUser");
-
             migrationBuilder.CreateTable(
                 name: "ActivityAttendees",
                 columns: table => new
