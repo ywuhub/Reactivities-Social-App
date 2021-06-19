@@ -60,6 +60,8 @@ namespace Application.Activities
                                 Activity = activity,
                                 IsHost = false
                             };
+
+                            activity.Attendees.Add(attendance);
                         }
 
                         var result = await _context.SaveChangesAsync() > 0;
