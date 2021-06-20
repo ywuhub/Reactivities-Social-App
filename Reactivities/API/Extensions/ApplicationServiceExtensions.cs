@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using Infrastructure;
+using Infrastructure.Photos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,8 @@ namespace Reactivities.API.Extensions
 
             services.AddScoped<IUsernameAccessor, UsernameAccessor>();
            
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+
             return services;
         }
     }
