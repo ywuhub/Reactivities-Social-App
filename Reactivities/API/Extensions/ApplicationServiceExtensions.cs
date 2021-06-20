@@ -1,4 +1,5 @@
 using Application.Interfaces;
+using Application.Photos;
 using Infrastructure;
 using Infrastructure.Photos;
 using MediatR;
@@ -38,6 +39,8 @@ namespace Reactivities.API.Extensions
 
             services.AddScoped<IUsernameAccessor, UsernameAccessor>();
            
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;
