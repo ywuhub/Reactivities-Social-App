@@ -1,7 +1,9 @@
+import { Formik } from 'formik';
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { useEffect } from 'react';
 import {Segment, Header, Comment, Form, Button} from 'semantic-ui-react'
+import MyTextArea from '../../../app/common/form/MyTextArea';
 import { useStore } from '../../../app/stores/store';
 
 interface Props {
@@ -31,7 +33,7 @@ export default observer(function ActivityDetailedChat({activityId}: Props) {
             >
                 <Header>Chat about this event</Header>
             </Segment>
-            <Segment attached>
+            <Segment attached clearing>
                 <Comment.Group>
                     {commentStore.comments.map(comment => (
                         <Comment key={comment.id}>
@@ -48,15 +50,28 @@ export default observer(function ActivityDetailedChat({activityId}: Props) {
                         </Comment>
                     ))}
                     
-                    <Form reply>
-                        <Form.TextArea/>
-                        <Button
-                            content='Add Reply'
-                            labelPosition='left'
-                            icon='edit'
-                            primary
-                        />
-                    </Form>
+                    <Formik
+                        onSubmit={(values, {resetForm}) =>
+                            commentStore.addComments(values).then(() => resetForm())
+                        }
+                        initialValues={{body: ''}}
+                    >
+                        {({isSubmitting, isValid}) => (
+                            <Form className='ui form'>
+                                <MyTextArea placeholder='Add comment' name='body' rows={2}/>
+                                <Button
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting || !isValid}
+                                    content='Add Reply'
+                                    labelPosition='left'
+                                    icon='edit'
+                                    primary
+                                    type='submit'
+                                    floated='right'
+                                />
+                            </Form>
+                        )}
+                    </Formik>             
                 </Comment.Group>
             </Segment>
         </>
