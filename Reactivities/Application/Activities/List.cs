@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application;
 using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
@@ -18,7 +19,7 @@ namespace Reactivities.Application.Activities
       {
             public class Query : IRequest<Result<PagedList<ActivityDTO>>> 
             { 
-                  public PagingParams Params { get; set; }
+                  public ActivityParams Params { get; set; }
             }
 
             public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDTO>>>
@@ -36,9 +37,20 @@ namespace Reactivities.Application.Activities
                   public async Task<Result<PagedList<ActivityDTO>>> Handle(Query request, CancellationToken cancellationToken)
                   {
                         var query =  _context.Activities
+                                          .Where(d => d.Date >= request.Params.StartDate)
                                           .OrderBy(d => d.Date)
                                           .ProjectTo<ActivityDTO>(_mapper.ConfigurationProvider, new {currentUsername = _useraccessor.GetUsername()})
                                           .AsQueryable();
+
+                        if (request.Params.IsGoing && !request.Params.IsHost)
+                        {
+                              query = query.Where(x => x.Attendees.Any(a => a.Username == _useraccessor.GetUsername()));
+                        }
+
+                        if (request.Params.IsHost && !request.Params.IsGoing)
+                        {
+                              query = query.Where(x => x.HostUsername == _useraccessor.GetUsername());
+                        }
 
                         return Result<PagedList<ActivityDTO>>.Success(
                               await PagedList<ActivityDTO>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
