@@ -32,7 +32,7 @@ namespace Application.Activities
                   {
                         var activity = await _context.Activities
                             .Include(a => a.Attendees).ThenInclude(u => u.AppUser)
-                            .FirstOrDefaultAsync(x => x.id == request.Id);
+                            .FirstOrDefaultAsync(x => x.Id == request.Id);
 
                         if (activity == null) return null;
 
