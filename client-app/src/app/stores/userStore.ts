@@ -12,7 +12,7 @@ export default class UserStore {
       }
 
       get isLoggedIn() {
-            return !! this.user;
+            return !!this.user;
       }
 
       login = async (creds: UserFormValues) => {
@@ -57,5 +57,9 @@ export default class UserStore {
 
       setImage = (image: string) => {
             if (this.user) this.user.image = image;
+      }
+
+      setDisplayName = (name: string) => {
+            if (this.user) this.user.displayName = name;
       }
 }
