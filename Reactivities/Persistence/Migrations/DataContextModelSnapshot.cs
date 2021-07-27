@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Reactivities.Persistence;
+using Persistence;
 
 namespace Persistence.Migrations
 {
@@ -14,11 +14,43 @@ namespace Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.6");
+                .HasAnnotation("ProductVersion", "5.0.1");
+
+            modelBuilder.Entity("Domain.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Venue")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Activities");
+                });
 
             modelBuilder.Entity("Domain.ActivityAttendee", b =>
                 {
-                    b.Property<string>("AppUserID")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ActivityId")
@@ -27,7 +59,7 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsHost")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AppUserID", "ActivityId");
+                    b.HasKey("AppUserId", "ActivityId");
 
                     b.HasIndex("ActivityId");
 
@@ -110,7 +142,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("Activityid")
+                    b.Property<Guid?>("ActivityId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AuthorId")
@@ -124,7 +156,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Activityid");
+                    b.HasIndex("ActivityId");
 
                     b.HasIndex("AuthorId");
 
@@ -295,41 +327,9 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Reactivities.Domain.Activity", b =>
-                {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("City")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsCancelled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Venue")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Activities");
-                });
-
             modelBuilder.Entity("Domain.ActivityAttendee", b =>
                 {
-                    b.HasOne("Reactivities.Domain.Activity", "Activity")
+                    b.HasOne("Domain.Activity", "Activity")
                         .WithMany("Attendees")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -337,7 +337,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.AppUser", "AppUser")
                         .WithMany("Activities")
-                        .HasForeignKey("AppUserID")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -348,9 +348,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Comment", b =>
                 {
-                    b.HasOne("Reactivities.Domain.Activity", "Activity")
+                    b.HasOne("Domain.Activity", "Activity")
                         .WithMany("Comments")
-                        .HasForeignKey("Activityid")
+                        .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.AppUser", "Author")
@@ -439,6 +439,13 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Activity", b =>
+                {
+                    b.Navigation("Attendees");
+
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.Navigation("Activities");
@@ -448,13 +455,6 @@ namespace Persistence.Migrations
                     b.Navigation("Followings");
 
                     b.Navigation("Photos");
-                });
-
-            modelBuilder.Entity("Reactivities.Domain.Activity", b =>
-                {
-                    b.Navigation("Attendees");
-
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

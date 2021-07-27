@@ -2,7 +2,7 @@ using System;
 
 namespace Application.Comments
 {
-    public class CommentDTO
+    public class CommentDto
     {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }

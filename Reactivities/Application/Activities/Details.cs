@@ -1,44 +1,44 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Activities;
+using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Reactivities.Application.Core;
-using Reactivities.Persistence;
+using Persistence;
 
-namespace Reactivities.Application.Activities
+namespace Application.Activities
 {
-      public class Details
-      {
-            public class Query : IRequest<Result<ActivityDTO>>
+    public class Details
+    {
+        public class Query : IRequest<Result<ActivityDto>>
+        {
+            public Guid Id { get; set; }
+        }
+
+        public class Handler : IRequestHandler<Query, Result<ActivityDto>>
+        {
+            private readonly DataContext _context;
+            private readonly IMapper _mapper;
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
-                  public Guid Id { get; set; }
+                _userAccessor = userAccessor;
+                _mapper = mapper;
+                _context = context;
             }
 
-            public class Handler : IRequestHandler<Query, Result<ActivityDTO>>
+            public async Task<Result<ActivityDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                  private readonly DataContext _context;
-                  private readonly IMapper _mapper;
-                  private readonly IUsernameAccessor _userAccessor;
-                  public Handler(DataContext context, IMapper mapper, IUsernameAccessor userAccessor)
-                  {
-                        _userAccessor = userAccessor;
-                        _mapper = mapper;
-                        _context = context;
+                var activity = await _context.Activities
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, 
+                        new {currentUsername = _userAccessor.GetUsername()})
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                  }
-                  public async Task<Result<ActivityDTO>> Handle(Query request, CancellationToken cancellationToken)
-                  {
-                        var activity = await _context.Activities
-                            .ProjectTo<ActivityDTO>(_mapper.ConfigurationProvider, new {currentUsername = _userAccessor.GetUsername()})
-                            .FirstOrDefaultAsync(x => x.id == request.Id);
-
-                        return Result<ActivityDTO>.Success(activity);
-                  }
+                return Result<ActivityDto>.Success(activity);
             }
-      }
+        }
+    }
 }

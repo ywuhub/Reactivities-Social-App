@@ -11,90 +11,90 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-      [AllowAnonymous]
-      [ApiController]
-      [Route("api/[controller]")]
-      public class AccountController : ControllerBase
-      {
-            private readonly UserManager<AppUser> _userManager;
-            private readonly SignInManager<AppUser> _signInManager;
-            private readonly TokenService _tokenService;
-            public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService)
+    [AllowAnonymous]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AccountController : ControllerBase
+    {
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly TokenService _tokenService;
+        public AccountController(UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager, TokenService tokenService)
+        {
+            _tokenService = tokenService;
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userManager.Users.Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Email == loginDto.Email);
+
+            if (user == null) return Unauthorized();
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (result.Succeeded)
             {
-                  _tokenService = tokenService;
-                  _signInManager = signInManager;
-                  _userManager = userManager;
+                return CreateUserObject(user);
             }
 
-            [HttpPost("login")]
-            public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
+            return Unauthorized();
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        {
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                  var user = await _userManager.Users.Include(p => p.Photos)
-                        .FirstOrDefaultAsync(x => x.Email == loginDTO.Email);
-
-                  if (user == null) return Unauthorized();
-
-                  var result = await _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, false);
-
-                  if (result.Succeeded)
-                  {
-                        return CreateUserObject(user);
-                  }
-
-                  return Unauthorized();
+                ModelState.AddModelError("email", "Email taken");
+                return ValidationProblem();
             }
-            
-            [HttpPost("register")]
-            public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                  if (await _userManager.Users.AnyAsync(x => x.Email == registerDTO.Email))
-                  {
-                        ModelState.AddModelError("email", "Email is already taken");
-                        return ValidationProblem();
-                  }
-
-                  if (await _userManager.Users.AnyAsync(x=> x.UserName == registerDTO.Username))
-                  {
-                        ModelState.AddModelError("username", "Username is already taken");
-                        return ValidationProblem();
-                  }
-
-                  var user = new AppUser
-                  {
-                        DisplayName = registerDTO.DisplayName,
-                        Email = registerDTO.Email,
-                        UserName = registerDTO.Username
-                  };
-
-                  var result = await _userManager.CreateAsync(user, registerDTO.Password);
-
-                  if (result.Succeeded)
-                  {
-                        return CreateUserObject(user);
-                  }
-
-                  return BadRequest("There was a problem registering this user");
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem();
             }
 
-            [Authorize]
-            [HttpGet]
-            public async Task<ActionResult<UserDTO>> GetCurretUser(LoginDTO loginDTO)
+            var user = new AppUser
             {
-                  var user = await _userManager.Users.Include(p => p.Photos)
-                        .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+                DisplayName = registerDto.DisplayName,
+                Email = registerDto.Email,
+                UserName = registerDto.Username
+            };
 
-                  return CreateUserObject(user);
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (result.Succeeded)
+            {
+                return CreateUserObject(user);
             }
 
-            private UserDTO CreateUserObject(AppUser user)
+            return BadRequest("Problem registering user");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await _userManager.Users.Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+
+            return CreateUserObject(user);
+        }
+
+        private UserDto CreateUserObject(AppUser user)
+        {
+            return new UserDto
             {
-                  return new UserDTO
-                  {
-                        DisplayName = user.DisplayName,
-                        Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
-                        Token = _tokenService.CreateToken(user),
-                        Username = user.UserName
-                  };
-            }
-      }
+                DisplayName = user.DisplayName,
+                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
+                Token = _tokenService.CreateToken(user),
+                Username = user.UserName
+            };
+        }
+    }
 }

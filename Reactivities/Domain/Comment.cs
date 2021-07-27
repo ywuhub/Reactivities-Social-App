@@ -1,5 +1,4 @@
 using System;
-using Reactivities.Domain;
 
 namespace Domain
 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Domain;
 
-namespace Reactivities.Application.Profiles
+namespace Application.Profiles
 {
     public class Profile
     {
@@ -13,5 +13,6 @@ namespace Reactivities.Application.Profiles
         public int FollowersCount { get; set; }
         public int FollowingCount { get; set; }
         public ICollection<Photo> Photos { get; set; }
+
     }
 }

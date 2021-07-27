@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Domain;
 
-namespace Reactivities.Domain
+namespace Domain
 {
     public class Activity
     {
@@ -13,7 +12,7 @@ namespace Reactivities.Domain
         public string Category { get; set; }
         public string City { get; set; }
         public string Venue { get; set; }
-        public Boolean IsCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }

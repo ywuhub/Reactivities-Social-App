@@ -1,6 +1,6 @@
 namespace Application.Activities
 {
-    public class AttendeeDTO
+    public class AttendeeDto
     {
         public string Username { get; set; }
         public string DisplayName { get; set; }
