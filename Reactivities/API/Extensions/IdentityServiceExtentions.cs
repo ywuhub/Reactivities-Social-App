@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Reactivities.Persistence;
+using Persistence;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Infrastructure;
