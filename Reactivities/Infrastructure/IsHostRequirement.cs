@@ -33,7 +33,7 @@ namespace Infrastructure
 
                   var attendee = _dbContext.ActivityAttendees
                     .AsNoTracking()
-                    .SingleOrDefaultAsync(x => x.AppUserID == userId && x.ActivityId == activityId).Result;
+                    .SingleOrDefaultAsync(x => x.AppUserId == userId && x.ActivityId == activityId).Result;
 
                   if (attendee == null) return Task.CompletedTask;
 
