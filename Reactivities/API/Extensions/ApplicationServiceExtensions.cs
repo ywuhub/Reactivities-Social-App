@@ -2,6 +2,7 @@ using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
+using Application.Photos;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
