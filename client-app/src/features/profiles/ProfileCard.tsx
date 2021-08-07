@@ -6,22 +6,28 @@ import { Profile } from '../../app/models/profile';
 import FollowButton from './FollowButton';
 
 interface Props {
-      profile: Profile;
+    profile: Profile;
 }
 
 export default observer(function ProfileCard({profile}: Props) {
-      return (
-            <Card as={Link} to={`/profiles/${profile.username}`}>
-                  <Image src={profile.image || '/assets/user.png'} />
-                  <Card.Content>
-                        <Card.Header>{profile.displayName}</Card.Header>
-                        <Card.Description>Bio goes here</Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                        <Icon name='user' />
-                        {profile.followersCount} followers
-                  </Card.Content>
-                  <FollowButton profile={profile} />
-            </Card>
-      )
+    function truncate(str: string | undefined) {
+        if (str) {
+            return str.length > 40 ? str.substring(0, 37) + '...' : str;
+        }
+    }
+
+    return (
+        <Card as={Link} to={`/profiles/${profile.username}`}>
+            <Image src={profile.image || '/assets/user.png'} />
+            <Card.Content>
+                <Card.Header>{profile.displayName}</Card.Header>
+                <Card.Description>{truncate(profile.bio)}</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <Icon name='user' />
+                {profile.followersCount} followers
+            </Card.Content>
+            <FollowButton profile={profile} />
+        </Card>
+    )
 })
