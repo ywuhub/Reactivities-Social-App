@@ -1,13 +1,13 @@
 # Reactivities Social App
 
 ## Deployment Link
-Link: Coming Soon...
+Link: https://reactivities-ywuhub.herokuapp.com/
 
 ## Description
 This is project is a social network application that allows users to sign up to events (similar to MeetUp or Facebook) and is built using ASP.NET Core and React JS.
 
 ## Technology
-Coming Soon...
+React JS, .Net Core 5.0 and Heroku for deployment.
 
 ## What I have learnt is:
 * How to build an application from start to publishing with .Net Core (v5.0), React 17 (with Typescript) and Mobx
