@@ -4,7 +4,7 @@
 Link: https://reactivities-ywuhub.herokuapp.com/
 
 ## Demo Account
-Email: bob@test.com
+Email: bob@test.com  
 Password: Pa$$w0rd
 
 ## Description
