@@ -11,7 +11,9 @@ Password: Pa$$w0rd
 This is project is a social network application that allows users to sign up to events (similar to MeetUp or Facebook) and is built using ASP.NET Core and React JS.
 
 ## Technology
-React JS Framework, ASP .Net Core 5.0 Web API and Heroku for deployment.
+- React JS Framework,
+- ASP .Net Core 5.0 Web API 
+- Heroku for deployment.
 
 ## What I have learnt is:
 * How to build an application from start to publishing with .Net Core (v5.0), React 17 (with Typescript) and Mobx
