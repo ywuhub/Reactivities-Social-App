@@ -1,6 +1,6 @@
 # Reactivities Social App
 
-## Deployment Link
+## Website
 Link: https://reactivities-ywuhub.herokuapp.com/
 
 ## Demo Account
@@ -8,7 +8,7 @@ Email: bob@test.com
 Password: Pa$$w0rd
 
 ## Description
-This is project is a social network application that allows users to sign up to events (similar to MeetUp or Facebook) and is built using ASP.NET Core and React JS.
+This is project is a social network application that allows users to sign up to and create events (similar to MeetUp or Facebook) and is built using ASP.NET Core and React JS.
 
 ## Technology
 - React JS Framework,
