@@ -3,6 +3,8 @@
 ## Website
 Link: https://reactivities-ywuhub.herokuapp.com/
 
+Note: There is a server error showing once you click on the link, you will have to click on the Logo at the top corner and that will show up the Login and Register options.
+
 ## Demo Account
 Email: bob@test.com  
 Password: Pa$$w0rd
